@@ -141,7 +141,7 @@ namespace LUISSample.Controllers
             }
             else
             {
-                return time + "PM";
+                return time + "PM ";
             }
         }
 
