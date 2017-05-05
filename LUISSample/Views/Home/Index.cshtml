@@ -1,0 +1,75 @@
+﻿@model LUISSample.ViewModel.ReservationInformation
+
+@{
+    ViewBag.Title = "Index";
+}
+<br />
+<div class="form-horizontal">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger"})
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-group">
+            @Html.Label("Smart Book")
+            @Html.TextBox("SearchString", "",
+            new { id = "searchBox", @class = "form-control textBoxFont", placeholder = "Reserve a room" })
+            <button class="btn btn-default pull-left">Search</button>
+        </div>
+    }
+
+    @using (Html.BeginForm("Create", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(model => model.Room)
+            @Html.TextBoxFor(model => model.Room, new { @class = "form-control textBoxFont" })
+            @Html.ValidationMessageFor(model => model.Room)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartTime)
+            @Html.TextBoxFor(model => model.StartTime, new { @class = "form-control textBoxFont" })
+            @Html.ValidationMessageFor(model => model.StartTime)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndTime)
+            @Html.TextBoxFor(model => model.EndTime, new { @class = "form-control textBoxFont" })
+            @Html.ValidationMessageFor(model => model.EndTime)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Day)
+            @Html.TextBoxFor(model => model.Day, new { @class = "form-control textBoxFont" })
+            @Html.ValidationMessageFor(model => model.Day)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Duration)
+            @Html.TextBoxFor(model => model.Duration, new { @class = "form-control textBoxFont" })
+            @Html.ValidationMessageFor(model => model.Duration)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Size)
+            @Html.DropDownListFor(m => m.Size, new SelectList(Model.Sizes, "Size"), "", new { @class = "form-control textBoxFont" })
+            @Html.ValidationMessageFor(m => m.Size)
+        </div>
+
+        if (User.Identity.IsAuthenticated)
+        {
+            <button class="btn btn-primary">Book Room</button>
+        }
+        else
+        {
+            <button class="btn btn-primary" disabled="disabled">Login To Submit</button>
+        }
+    }
+</div>
+
+@section scripts
+{
+    <script>
+        
+    </script>
+}

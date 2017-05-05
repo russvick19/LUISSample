@@ -1,0 +1,82 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.textBoxExtend {
+    width:700px;
+}
+
+/*Bootstrap overrides*/
+.navbar navbar-inverse navbar-fixed-top{
+    background-color: blue;
+}
+
+.inner-addon {
+    position: relative;
+}
+
+    /* style icon */
+    .inner-addon .glyphicon {
+        position: absolute;
+        padding: 10px;
+        pointer-events: none;
+    }
+
+/* align icon */
+.left-addon .glyphicon {
+    left: 0px;
+}
+
+.right-addon .glyphicon {
+    right: 0px;
+}
+
+/* add padding  */
+.left-addon {
+    padding-left: 30px;
+}
+
+.right-addon {
+    padding-right: 5px;
+}
+
+.textBoxFont {
+    color: black;
+    
+}
+
+.navbar-inverse {
+    background-color: black;
+}
+
+    .navbar-inverse .navbar-brand {
+        color:blue;
+    }
+    .navbar-inverse .navbar-nav > li > a{
+        color:white;
+    }
+
+    .navbar-inverse .navbar-nav > li > a:hover {
+        color:blue;
+    }

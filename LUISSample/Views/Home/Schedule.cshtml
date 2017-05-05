@@ -1,0 +1,76 @@
+﻿@model IEnumerable<LUISSample.Models.Schedule>
+
+@{
+    ViewBag.Title = "Schedule";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Schedule</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoomNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DurationInMinutes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Size)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Day)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsAvailable)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RoomNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DurationInMinutes)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Size)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Day)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsAvailable)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+        </td>
+    </tr>
+}
+
+</table>
