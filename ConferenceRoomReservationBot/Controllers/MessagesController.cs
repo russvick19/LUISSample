@@ -18,16 +18,18 @@ namespace ConferenceRoomReservationBot
         {
             if (activity.Type == ActivityTypes.Message)
             { 
-                //await Conversation.SendAsync(activity, () => new Dialogs.RootDialog());
                 await Conversation.SendAsync(activity, () => new ReservationLuisDialog());
             }
             else
             {
                 HandleSystemMessage(activity);
             }
+
+
             var response = Request.CreateResponse(HttpStatusCode.OK);
             return response;
         }
+       
 
         private Activity HandleSystemMessage(Activity message)
         {

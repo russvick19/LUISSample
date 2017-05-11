@@ -1,10 +1,14 @@
 ﻿using JSONUtils;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.FormFlow;
 using Microsoft.Bot.Builder.Luis;
 using Microsoft.Bot.Builder.Luis.Models;
+using Microsoft.Bot.Connector;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Web.Services.Description;
 
 namespace ConferenceRoomReservationBot
 {
@@ -44,9 +48,32 @@ namespace ConferenceRoomReservationBot
             LUIS luisJson = await QueryLUIS(result.Query);
 
             Reservation reservationInfo = new Reservation(luisJson);
-            
-            await context.PostAsync(reservationInfo.constructReservation());
-            context.Wait(MessageReceived);
+
+            var message = context.MakeMessage();
+            message.Attachments = new List<Attachment>();
+
+            //await context.PostAsync(reservationInfo.constructReservation());
+            //await context.PostAsync(message);
+
+            context.Wait(this.MessageReceivedAsync);
+
+            //context.Wait(MessageReceived);
+        }
+
+        private void ShowOptions(IDialogContext context)
+        {
+            PromptDialog.Choice(context, this.OnOptionSelected, new List<string>() {"Reservation" , "Form Bot" }, "Bot Options", "Not a valid option", 3);
+        }
+
+        private Task OnOptionSelected(IDialogContext context, IAwaitable<string> result)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> result)
+        {
+            var message = await result;
+            this.ShowOptions(context);
         }
 
         private static async Task<LUIS> QueryLUIS(string Query)
@@ -60,7 +87,6 @@ namespace ConferenceRoomReservationBot
                 string LUIS_Subscription_Key = "34a7147d5534422aa6ddc32f312e2f28";
                 string RequestURI = String.Format("{0}?subscription-key={1}&q={2}",
                     LUIS_Url, LUIS_Subscription_Key, LUISQuery);
-                Console.WriteLine(RequestURI);
                 System.Net.Http.HttpResponseMessage msg = await client.GetAsync(RequestURI);
                 if (msg.IsSuccessStatusCode)
                 {
