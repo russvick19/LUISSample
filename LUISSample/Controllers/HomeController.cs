@@ -6,123 +6,47 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Mvc;
-using LUISSample.ViewModel;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Configuration;
+using Microsoft.Bot.Connector.DirectLine;
+using System.Diagnostics;
+using System.Linq;
+using LUISSample.ViewModel;
 
 namespace LUISSample.Controllers
 {
     public class HomeController : Controller
     {
+        private static string directLineSecret = ConfigurationManager.AppSettings["DirectLineSecret"];
+        private static string botId = ConfigurationManager.AppSettings["BotId"];
+        private static string fromUser = "DirectLineSampleClientUser";
+
         //Luis look up and analyze
-        public async Task<ActionResult> Index(string searchString)
+        public ActionResult Index(string searchString)
         {
-            //Query Return = new Query();
-            ReservationInformation Return = new ReservationInformation();
-            try
-            {
-                if (searchString != null)
-                {
-                    LUIS objLUISResult = await QueryLUIS(searchString);
-                    foreach (var item in objLUISResult.entities)
-                    { 
-                        if(item.type == "day")
-                        {
-                            if(item.entity == "tomorrow")
-                            {
-                                var tmr = DateTime.Now.Date.AddDays(1).ToShortDateString().ToString();
-                                Return.Day = tmr.ToString(); ;
-                            }
-                            else
-                            {
-                                Return.Day = item.entity;
-                            }
-                        }
-                        if (item.type == "Time::Start")
-                        {
-                            Return.StartTime = determineAmPm(item.entity);
-                        }
-                        if (item.type == "Time::End")
-                        {
-                            Return.EndTime = determineAmPm(item.entity);
-                        }
-                        if (item.type == "duration")
-                        {
-                            Return.Duration = item.entity;
-                        }                      
-                        if (item.type == "size")
-                        {
-                            Return.Size = item.entity;
-                        }
+            return View();
+        }
 
-                        if (item.type == "room")
-                        {
-                            if(item.entity == "a")
-                            {
-                                List<string> roomList = new List<string>() { "1001", "1002", "1003",
-                                "1004", "1005", "1006", "2001", "2002", "2003",
-                                "2004", "2005", "2006"};
-                                Random r = new Random();
-                                int ran = r.Next(0, roomList.Count);
-                                Return.Room = roomList[ran];
-                            }
-                            else
-                            {
-                                Return.Room = item.entity;
-                            }
-                        }
-                    }
-                }
+        [HttpPost]
+        public ActionResult Index(Question q)
+        {
+            q.UserQuestion = "Sounds good";
+            return View(q);
+        }
 
-                //Caclculate duration from end time
-                if(Return.Duration == null)
-                {
-                    DateTime et = Convert.ToDateTime(Return.EndTime);
-                    DateTime st = Convert.ToDateTime(Return.StartTime);
-                    Return.Duration = et.Subtract(st).TotalMinutes.ToString();
-                }
-                //Calculate end time from duration
-                else if(Return.EndTime == null)
-                {
-                    int tryNParseMeBro = 0;
-                    DateTime st = Convert.ToDateTime(Return.StartTime);
+        private static async Task StartBotConversation()
+        {
+            DirectLineClient client = new DirectLineClient(directLineSecret);
 
-                    bool result = int.TryParse(Return.Duration, out tryNParseMeBro);
+            var conversation = await client.Conversations.StartConversationAsync();
 
-                    if (result)
-                    {
-                        Return.EndTime = determineAmPm(
-                            st.AddMinutes(tryNParseMeBro).ToString("HH:mm"));
-                    }
-                    else
-                    {
-                        Return.Duration = "Couldn't Parse duration";
-                        Return.EndTime = "Duration not valid";
-                    }
-                }
+            new System.Threading.Thread(async () => await ReadBotMessagesAsync(client, conversation.ConversationId)).Start();
+        }
 
-                if (Return.Room == "a")
-                {
-                    if (Return.Size == null)
-                    {
-                        List<string> roomList = new List<string>() { "1001", "1002", "1003",
-                        "1004", "1005", "1006", "2001", "2002", "2003",
-                        "2004", "2005", "2006"};
-                        List<ReservationInformation> resvList = new 
-                            List<ReservationInformation>();
-                        //Need to fetch database for available rooms and pick one
-                        //fetch all rooms available
-                    }
-                }
-                Return.UserId = User.Identity.Name;
-
-                return View(Return);
-            }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, "Error: " + ex);
-                return View(Return);
-            }
+        private static Task ReadBotMessagesAsync(DirectLineClient client, string conversationId)
+        {
+            var conv = conversationId;
+            return null;
         }
 
         public string determineAmPm(string time)
@@ -137,7 +61,7 @@ namespace LUISSample.Controllers
 
             if (st > 6 && st < 12)
             {
-                return time + "AM";                
+                return time + "AM";
             }
             else
             {
@@ -173,6 +97,16 @@ namespace LUISSample.Controllers
             return View(items);
         }
 
+        public ActionResult Reservation()
+        {
+            return View();
+        }
+
+        public ActionResult Form()
+        {
+            return View();
+        }
+
 #pragma warning disable 1998
 
         [ActionName("Create")]
@@ -200,7 +134,7 @@ namespace LUISSample.Controllers
 
             return View("Index");
         }
-       
+
 
         [HttpPost]
         [ActionName("Edit")]

@@ -1,0 +1,18 @@
+﻿@model DirectLine
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<h1>Welcome to main menu</h1>
+
+<iframe style="width:300px; height:500px;" src='https://webchat.botframework.com/embed/luisconferenceroomreservationbot?s=KJXLtxH9SZg.cwA.JRQ.WqXBQ36-thIDf50_C1vzXrfBdcmxAC2_nj1VREtPV9w'></iframe>
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserRequest)
+            @Html.TextBoxFor(m => m.UserRequest, new { @class = "form-control" })
+            <input class="btn btn-lg btn-primary" type="submit" value="search" />
+        </div>
+    }
+
