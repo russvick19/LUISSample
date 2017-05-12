@@ -49,31 +49,9 @@ namespace ConferenceRoomReservationBot
 
             Reservation reservationInfo = new Reservation(luisJson);
 
-            var message = context.MakeMessage();
-            message.Attachments = new List<Attachment>();
+            await context.PostAsync(reservationInfo.constructReservation());
 
-            //await context.PostAsync(reservationInfo.constructReservation());
-            //await context.PostAsync(message);
-
-            context.Wait(this.MessageReceivedAsync);
-
-            //context.Wait(MessageReceived);
-        }
-
-        private void ShowOptions(IDialogContext context)
-        {
-            PromptDialog.Choice(context, this.OnOptionSelected, new List<string>() {"Reservation" , "Form Bot" }, "Bot Options", "Not a valid option", 3);
-        }
-
-        private Task OnOptionSelected(IDialogContext context, IAwaitable<string> result)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual async Task MessageReceivedAsync(IDialogContext context, IAwaitable<IMessageActivity> result)
-        {
-            var message = await result;
-            this.ShowOptions(context);
+            context.Wait(MessageReceived);
         }
 
         private static async Task<LUIS> QueryLUIS(string Query)
