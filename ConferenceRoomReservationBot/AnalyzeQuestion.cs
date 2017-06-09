@@ -144,6 +144,7 @@ namespace AccessibilityQABot
                 return "Accessibility should be taken into consideration in any product you expect to be client-facing. If you believe your product may be used by the general public or even people"
                     + "outside of your team you should take accessibility into consideration when designing your application";
             }
+            //helloasdfsa
             else if (QIdentifier.ToLower().Contains("how"))
             {
                 if (!String.IsNullOrEmpty(Verb) && Verb.ToLower().Contains("start"))
