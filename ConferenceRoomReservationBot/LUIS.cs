@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace JSONUtils
+namespace AccessibilityQABot
 {
     public class TopScoringIntent
     {
@@ -21,15 +20,14 @@ namespace JSONUtils
         public string date { get; set; }
     }
 
+    //Model for JSON response
     public class Query
     {
-        public string Room { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
-        public string Duration { get; set; }
-        public string Size { get; set; }
-        public string Day { get; set; }
-        public IEnumerable<String> Sizes = new string[] { "Big", "Medium", "Small" };
+        public string QuestionIdentifier { get; set; }
+        public string Verb { get; set; }
+        public string Adjective { get; set; }
+        public string Subject { get; set; }
+        public string Noun { get; set; }
     }
 
     public class Entity

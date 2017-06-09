@@ -1,13 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LUISSample", "LUISSample\LUISSample.csproj", "{20361135-4A20-49F5-8D28-1975A180FE72}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConferenceRoomReservationBot", "ConferenceRoomReservationBot\ConferenceRoomReservationBot.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainMenuSample", "MainMenuSample\MainMenuSample.csproj", "{CD3FAB54-999D-4F38-8BD5-E63860C29F3C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessibilityQA", "ConferenceRoomReservationBot\AccessibilityQA.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{20361135-4A20-49F5-8D28-1975A180FE72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20361135-4A20-49F5-8D28-1975A180FE72}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20361135-4A20-49F5-8D28-1975A180FE72}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20361135-4A20-49F5-8D28-1975A180FE72}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CD3FAB54-999D-4F38-8BD5-E63860C29F3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CD3FAB54-999D-4F38-8BD5-E63860C29F3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CD3FAB54-999D-4F38-8BD5-E63860C29F3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CD3FAB54-999D-4F38-8BD5-E63860C29F3C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

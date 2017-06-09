@@ -8,5 +8,6 @@ namespace LUISSample.Models
     public class Question
     {
         public string UserQuestion { get; set; }
+        public string SpeechString { get; set; }
     }
 }

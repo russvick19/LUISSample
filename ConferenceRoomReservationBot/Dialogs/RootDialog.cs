@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Connector;
 
-namespace ConferenceRoomReservationBot.Dialogs
+namespace AccessibilityQABot
 {
     [Serializable]
     public class RootDialog : IDialog<object>

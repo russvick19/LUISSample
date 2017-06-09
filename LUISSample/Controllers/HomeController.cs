@@ -9,9 +9,9 @@ using System.Web.Mvc;
 using System.Text.RegularExpressions;
 using System.Configuration;
 using Microsoft.Bot.Connector.DirectLine;
+using System.Speech.Recognition;
+using System.Threading;
 using System.Diagnostics;
-using System.Linq;
-using LUISSample.ViewModel;
 
 namespace LUISSample.Controllers
 {
@@ -30,8 +30,12 @@ namespace LUISSample.Controllers
         [HttpPost]
         public ActionResult Index(Question q)
         {
-            q.UserQuestion = "Sounds good";
             return View(q);
+        }
+
+        private static void EnginedRecognizedSpeech(object sp, SpeechRecognizedEventArgs e)
+        {
+            
         }
 
         private static async Task StartBotConversation()
