@@ -1,0 +1,268 @@
+MAS	Title	Requirement Description	Tools Used (for both manual and automated validations)
+1	Platform-provided Accessibility User Settings	"The platform (OS) must provide the user with accessibility settings such as: High contrast, alternative alerts, system level volume, customized input, increased text sizes, custom fonts, custom focus appearances, and navigation alternatives."	
+			
+2	Accessible Content Creation	"Authoring and development tools must provide UI that supports creating accessible applications, services, tools, and content. The UI must be consistent with UI for similar authoring and development tasks and be integrated into the workflow to promote accessible practices. Also, document how to use the authoring or development tool."	
+3	Preservation of accessibility information in transformations	A content generating product must be able to preserve the platform-level accessibility settings without impacting the output of the product	
+4	Authoring and Development tool text search	An authoring/development tool must provide text search capabilities for design and code surfaces	
+5	Focus Order	"Support a focus order that is aligned with the meaning or operation of the UI. If the navigation sequence is independent of meaning or operation, then align the focus order with the flow of the visual design"	"Manual - Keyboard
+Automated Tool - KEROS"
+			
+			
+5A	Focus Visible	"Provide a visual focus indicator to ensure users can orient themselves and track their navigation through a task, scenario, or content. Support a focus order that is aligned with the meaning or operation of the user interface (UI). If the navigation sequence is independent of meaning or operation, then align the focus order with the flow of the visual design."	"Manual - Keyboard
+Automated Tool - KEROS"
+			
+			
+6	On Focus	Do not use changes in focus to trigger changes in context or to activate functionality on platforms that support focus	Manual - Keyboard
+			
+			
+7	No Keyboard Trap	Ensure that users can move focus out of a control by using a method consistent with the method used to move focus into the control	"Manual\Screen Readers - Keyboard\JAWS\HTML(F12)
+Automated Tool - KEROS"
+			
+			
+8	Three Flashes or Below Threshold	"Do not create hardware, content, products, services, or tools that are likely to cause seizures due to UI or content that flashes at a rate greater than 3 times per second."	Manual\PEAT
+			
+			
+9	"Pause, Stop, Hide"	"When UI or content moves, blinks, or scrolls for more than 5 seconds, provide a way for users to pause or stop the animation"	"Manual - Keyboard
+Automated tool - aXe"
+			
+			
+10	Timing Adjustable	"For any feature that requires users to complete an action within a set period of time, provide a way for users to disable or adjust the time limit (for example, by increasing the time limit by a minimum of 10 times the default limit). Exceptions include activities where time limits are essential for security or real-time activities, such as game play or a live auction ."	"Manual - Keyboard
+Automated tool - aXe"
+			
+			
+12	Audio Controls	"When audio plays automatically (not initiated by the user) for more than 3 seconds, provide a way for users to pause or stop the audio, or to adjust the volume"	Manual - Keyboard
+			
+			
+13	Resize Text	"Except for captions and images of text, text can be resized without assistive technology up to 200 Except for percent without loss of content or functionality"	"Manual - Zooming, Magnifier
+Automated tool - aXe"
+			
+			
+14	Sensory Characteristics	"Do not rely solely on sound or other sensory indicators of content or UI components (such as shape, size, location, or orientation) to convey information, indicate an action, prompt a response, or distinguish a visual element."	"Manual - Keyboard
+Automated Tool - KEROS"
+			
+			
+15	Images of Text	"Do not use raster images of text (for example, .gif or .jpg files) to convey information except when the information that is being conveyed is constrained by or dependent upon the presentation format (such as logos, logotypes, or font samples)."	"Manual\Screen Reader\HTML(F12) - Keyboard\Windows Accessibility Toolbar
+"
+			
+			
+16	Use of Color	"Do not use color in a way that requires the user to discriminate between hues as the only means to convey information, indicate an action, prompt a response, or distinguish a visual element."	"Manual - Keyboard
+Automated Tool - KEROS, aXe"
+			
+			
+17	Contrast (Minimum)	"By default, visible text must have a minimum luminosity contrast ratio of 4.5:1 against the background. Exceptions include logos and incidental text (for example, text that is part of an inactive UI component or that is considered to be decorative)."	"Automated Tool - KEROS, aXe
+Manual - WAT"
+			
+			
+19	Labels or Instructions	"When UI requires the user to input data or make a selection, provide instructions or labels that describe the necessary input and expected data formats to prevent validation errors."	"Manual\Screen Readers - JAWS, NVDA
+Automated Tool - KEROS, aXe"
+			
+			
+20	Non-text Content	Non-text content should have a  text alternative  that serves the equivalent purpose.	"Manual\Screen Readers - Keyboard\JAWS
+Automated Tool - KEROS, aXe"
+			
+			
+20 A	Page Titled	"Provide informative, context-sensitive page title values. The title of a page or document  must provide information specific to the currently viewed page or document."	"Manual - Keyboard
+Manual - WAT
+Automated tool - aXe"
+			
+20 B	Link Purpose (In Context)	"Whenever possible, provide link text that identifies the purpose of the link without needing additional context."	"Manual\Screen Reader\HTML(F12), WAT - Keyboard\Screen Reader
+Automated Tool - KEROS"
+			
+			
+21	On Input	"Changing the setting of, or entering data into, any UI component must not automatically cause an unexpected change of context that might disorient users without first notifying them that the change of context will occur."	Manual\Screen Readers - Keyboard\JAWS
+			
+			
+22	Error Identification	"If an input error is automatically detected, the item that is in error is identified and the error is described to the user in text. Make sure users are aware that an error has occurred and can determine what is wrong."	Manual\Screen Readers - Keyboard\JAWS
+			
+			
+22 A	Error Suggestion	For all detected input errors – after identifying the location where the error occurred and describing the error in text – provide users with actionable suggestions for correcting it.	Manual\Screen Readers - Keyboard\JAWS
+			
+			
+23	"Error Prevention (Legal, Financial, Data)"	"In web applications and services, user input that results in a  legal commitment ?, financial transaction, or modification to user-controllable data in data storage systems must be able to be reversed, verified, or confirmed."	Manual\Screen Readers - Keyboard\JAWS
+			
+			
+24	Activation of Accessibility Settings	"Inform users of the state of all accessibility settings that can be configured through the UI of your product, service, tool, or content."	Manual\ Screen Reader - JAWS/ NVDA
+25	Meaningful Sequence	Ensure content is rendered in the proper order.	Manual\Screen Readers - Keyboard\JAWS
+			
+			
+25 A	Consistent Identification	"UI components that have the same functionality must visually appear, behave, and be identified programmatically in a consistent way within a product, service, or tool for a specific platform. Ensure consistent identification of functional components that appear   repeatedly."	"Manual - Keyboard
+Automated Tool - KEROS"
+26	Multiple Ways	Provide an opportunity to navigate in more than one manner.	
+26 A	Consistent Navigation	"Navigational mechanisms that are repeated on multiple Web pages within a set of Web pages occur in the same relative order each time they are repeated, unless a change is initiated by the user."	"Manual - Keyboard
+Automated Tool - KEROS, aXe"
+27	Bypass Blocks	"Expose visual groupings and semantic structure of controls and content programmatically so that users can identify and navigate to, or through, them. Additionally, provide ways for users to activate, or navigate directly to, controls and content with as few interactions as possible (for example, bypass UI elements by using keyboard shortcuts or “link to content” links)."	
+27 A	Headings and Labels	"When headings and labels are used, they must describe the topic or purpose of the element or content that they pertain to.  Headings and labels must be unique unless there is sufficient context to allow users to differentiate between duplicated headings or labels. ?
+Ensure headings and labels are descriptive and unique"	"Manual\Screen Readers - Keyboard\JAWS\ WAT
+Automated Tool - KEROS"
+			
+			
+28	Simultaneous User Actions	"Products, services, tools and content must provide at least one mode of operation and information retrieval that does not require fine motor control or simultaneous actions."	Manual
+29	Alternatives to Voice-based Services	"Users responding to audio prompts or instructions must be able to request more time, pause, repeat, etc. Applies to users with hearing, motor, or learning disabilities"	Manual - Screen reader
+			
+30	Caller Identification	"A product that supports PSTN or VoIP calls must offer accessible ways of checking caller ID, etc. to blind or low-vision users"	
+31	Speech volume range	"A product that provides telecommunications (VoIP, e-mail, IM, video conferencing, etc.) must let users control volume."	
+31 A	Incremental volume control	"In a telecommunications product, if there is an incremental volume control, then at least one step of 12 dB gain above the lowest volume must be provided"	
+32	Volume reset	"In a telecommunications product that has a handset, headset, etc. near the ear, there must be a function for automatically setting the volume back to default"	
+33	Platform accessibility services	A platform that runs external software must provide accessibility services that allow AT to work with that software	Manual
+			
+			
+34	Closed Platform Functionality	Alternative access features must be built into a closed system	Manual
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+34 A	Non-Web software requirements (closed functionality)	"On a closed system, alternative access features must be built into non-web software"	
+			
+			
+			
+35	Platform Assistive Technologies 	"A platform must provide screen reader, screen magnifier, speech recognition tool, etc.."	Manual/ Screen Reader
+			
+			
+			
+			
+			
+			
+			
+			
+			
+36	Keyboard	"For any product, service, tool, or content, all user tasks (such as entering data, saving a file, or reading a document) must be operable through the UI by using only physical or on-screen keyboard interfaces (on platforms that support keyboard interfaces)."	"Manual - Keyboard
+Automated Tool - KEROS, aXe"
+			
+			
+39	Biometric ID	A product using biometric ID must offer either a second type of biometric ID or a non-biometric ID method.	
+40	Info and Relationships	"Ensure that information and relationships that are implied by visual or auditory formatting are preserved when the presentation format changes. For any product, service, tool or content, functionality and navigation of the content and user interface (UI) components must be programmatically exposed and operable."	"Manual\Screen Readers\HTML(F12)\ WAT - Keyboard\JAWS
+Automated tool - aXe"
+			
+			
+40 A	Parsing	"Ensure that user agents, including assistive technologies, can accurately interpret and parse content. For any product, service, tool or content, functionality and navigation of the content and user interface (UI) components must be programmatically exposed and operable"	"Manual\Screen Readers\HTML(F12) - Keyboard\JAWS
+Automated Tool - KEROS, aXe"
+			
+			
+40 B	"Name, Role, Value"	"Ensure that Assistive Technologies (AT) can gather information about, activate (or set) and keep up to date on the status of user interface controls in the content. For any product, service, tool or content, functionality and navigation of the content and user interface (UI) components must be programmatically exposed and operable"	"HTML(F12) - Inspect Tool, WAT
+Screen reader - JAWS
+Automated Tool - KEROS, aXe"
+			
+			
+41	Language of Page	"Ensure that content developers provide information in the Web page that user agents need to present text and other linguistic content correctly. For all content, the default human language must be programmatically exposed when supported by the file format. Additionally, expose the language for each passage or phrase that differs from the default language. Exceptions include proper names, technical terms, and words or phrases that have been adopted into the default language"	"HTML(F12), WAT
+Screen reader
+Automated tool - aXe"
+			
+			
+41 A	Language of Parts	"Ensure that user agents can correctly present content written in multiple languages. For all content, the default human language must be programmatically exposed when supported by the file format. Additionally, expose the language for each passage or phrase that differs from the default language. Exceptions include proper names, technical terms, and words or phrases that have been adopted into the default language"	"HTML(F12), WAT
+Screen reader
+Automated tool - aXe"
+			
+42 A	No Disruption of Accessibility Features	"Do not disrupt the built-in assistive technologies of the platform in a way that interferes with a person’s ability to use any application or platform feature, unless when requested to do so by the user during the operation of the software."	"Manual, High Contrast
+Automated Tool - KEROS"
+			
+			
+			
+			
+			
+			
+			
+43	Preserving Accessibility Information	"Preserve all accessibility information (for example, HTML markup, captions, and UIA properties) for any format or standard that your product, service, or tool supports when transmitting, receiving, converting (such as when a user clicks ‘Save As’), or processing data, file formats, or content."	Manual\Screen Readers - Keyboard\JAWS
+44	Media (Video) Playback Functionality	Applications and platform features that provide media playback functionality (such as the Xbox Video or Windows Media Player) must support multiple synchronized alternative tracks for captions and audio descriptions in their default player.	Manual
+			
+			
+			
+			
+			
+			
+			
+			
+46	Video Communication	Real-time communication apps and services must provide high-quality video that supports signing and lip-reading	
+			
+			
+46 A	Alternatives to Video-based Services	"If an app or service provides real-time video-based communication and also provides answering machine or similar facilities, those facilities must be accessible to people with hearing, speech, or vision disabilities."	
+47	Authoring Tools - Templates	"In a tool that supports authoring content, templates and themes must meet accessibility requirements."	
+53	Repair Assistance	An authoring tool must provide a mechanism for authors to check documents for accessibility problems.	
+			
+56	Product Documentation Format	"Electronic documentation must be accessible, and documentation must be provided in alternate formats (e.g. Braille) at no charge"	"Manual - Screen reader, PAC tool"
+57	Support Services	Support Centers must provide disability-specific services (such as agents fluent in ASL) and accessible documentation.	
+			
+			
+58	Accessibility and Compatibility Features	"If a product has product-specific features for people with disabilities (keyboard shortcuts, UI to set accessibility-related options, etc.), those features must be documented."	
+62	Captions (Pre-recorded)	"Provide captions for all new pre-recorded media content owned by, or licensed exclusively to, Microsoft. Content that Microsoft is licensing from other companies (e.g., films, TV shows) is covered by this requirement if the content comes accompanied with captions under the terms of the license. This requirement does not include media generated in real time (such as a Web Cam chat service)."	"Manual\Screen Readers - Keyboard\JAWS
+Automated tool - aXe"
+			
+			
+62 A	Audio Description or Media Alternative (Pre-recorded)	"Provide audio descriptions or media alternative for all new pre-recorded media content owned by, or licensed exclusively to, Microsoft. Content that Microsoft is licensing from other companies (e.g., films, TV shows) is covered by this requirement if the content comes accompanied with audio descriptions under the terms of the license. This requirement does not include media generated in real time "	"Manual\Screen Readers - Keyboard\JAWS
+Automated tool - aXe"
+			
+			
+62 B	Audio Description (Pre-Recorded)	"Provide audio descriptions for all new pre-recorded media content owned by, or licensed exclusively to, Microsoft. Content that Microsoft is licensing from other companies (e.g., films, TV shows) is covered by this requirement if the content comes accompanied with audio descriptions under the terms of the license. This requirement does not include media generated in real time (such as a Webcam chat service)."	"Manual\Screen Readers - Keyboard\JAWS
+Automated tool - aXe"
+			
+			
+63	Audio-Only and Video-Only	"Captions or a transcript must be provided for:
+·     All new pre-recorded audio-only content owned by, or licensed exclusively to, Microsoft.
+·     All pre-recorded audio-only content that Microsoft licenses (such as radio talk shows and music) for which the terms of the license include captions or a transcript."	Manual\Screen Readers - Keyboard\JAWS
+	(Pre-Recorded)		
+			
+64	Captions (Live)	"Captions must be provided for:
+·     All synchronized media containing live (real-time) audio (such as teleconferences and gameplay) that is owned by, or licensed exclusively to, Microsoft."	Manual\Screen Readers - Keyboard\JAWS
+			
+			
+65	Standard Hardware Connection	"A product's UI must be able to be operated through a standard connection using a standard protocol, so that AT products can connect to it."	Manual
+68	Hearing Aid Compatibility (HAC) for Mobile Handsets (T mode)	A mobile handset must support magnetic coupling with hearing aids and other hearing technologies.	Manual
+69	Hearing Aid Compatibility (HAC) for Mobile Handsets (M mode)	A mobile handset must control interference with hearing aids and other hearing technologies. The phone has an FCC rating of M3 or M4.	Manual
+70	TTY Connectivity	A mobile phone or phablet or VoIP device must be usable with external textphone (TTY) devices.	
+71	Numeric Keys	A device with a rectangular keypad must have a number 5 key that is tactilely distinct from other keys (for benefit of blind users). Locking and toggle controls are discernable visually and through touch or sound. Key repeat and key stroke timing can be adjusted.	
+			
+			
+			
+			
+71 A	Means of Operation of Mechanical Parts	Mechanical controls must be operable by individuals who have limited mobility or dexterity.	
+			
+			
+71 B	Force of Operation of Mechanical Parts	"Hardware controls must require enough force to prevent accidental activation, but not too much force."	
+			
+71 C	Operable parts discernibility	"People who are blind must be able to discern the parts of a device, and operate it without vision."	
+71 D	Tactile Indication of Speech Mode 	"If a device has mechanical controls and provides speech output, the controls for speech must be identifiable by touch"	
+72	Controls on Non-Portable Products	Free-standing devices have controls that are low enough for a person in a wheelchair to reach	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+73	Colour - Hardware	Hardware must not use color as the only visual way of conveying information	
+74	"User Interfaces, Video Programming Guides and Menus"	Video devices must offer audio output (e.g. through a screen reader) that lets a blind user play the videos	
+74 A	"Closed Captioning, Video Description and Emergency Information Activation"	Closed captioning must be easy to turn on (users with hearing disabilities). The audio stream for emergency info has to be easy to turn on (users who are blind).	
+75	Audio bandwidth for speech (informative recommendation)	"A device providing two-way voice communication must have an upper limit of at least 7,000 Hz."	
+75 A	Real-Time Text (RTT) functionality	A device providing two-way voice communication must also provide real-time text communication.	
+			
+			
+			
+			
+			
+			
+76	WCAG 2.0 Conformance Requirements	Web pages must meet WCAG 2.0 accessibility requirements.	
+77	Speech-to-Text for In-game Chat?	"For interconnected and non-interconnected VoIP services utilized under circumstances where a user’s hands are otherwise occupied and therefore typing text messages is not a viable alternative to speaking aloud, such as in-game chat, speech-to-text is required to make the VoIP service accessible to people who cannot hear or have hearing loss"	
+			
+77 A	Text-to-Speech for In-Game Chat	"For interconnected and non-interconnected VoIP services utilized under circumstances where requiring other users to engage in text chat is not a viable alternative because users’ hands are otherwise occupied, such as during game play, text-to speech (TTS) is required to make the VoIP service accessible to people who cannot speak or have speech impairments"	

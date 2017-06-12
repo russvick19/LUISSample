@@ -127,6 +127,7 @@
     <Content Include="Images\keros.emf" />
     <Content Include="Images\magnifier.png" />
     <Content Include="Images\watpic.png" />
+    <Content Include="masStandards.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -136,6 +137,7 @@
     <Compile Include="AnalyzeRequest.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="CsvReader.cs" />
     <Compile Include="Dialogs\RootDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -164,7 +166,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

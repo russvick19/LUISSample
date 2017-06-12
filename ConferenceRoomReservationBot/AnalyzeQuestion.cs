@@ -3,6 +3,7 @@ using Microsoft.Bot.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -19,15 +20,6 @@ namespace AccessibilityQABot
 
         public AnalyzeQuestion() {}
 
-        private string[] masSpecificNameArray = {"Platform-provided Accessibility User Settings", "Accessible Content Creation", "Preservation of accessibility information in transformations",
-            "Authoring and Development Tool Text Search", "Focus Order", "","On Focus", "No Keyboard Trap", "Three Flashes or Below Threshold"};
-
-        private string[] masSpecificRequirementArray = { "The platform (OS) must provide the user with accessibility settings such as: High contrast, alternative alerts, system level volume, customized input, increased text sizes, custom fonts, custom focus appearances, and navigation alternatives.",
-            "An authoring tool must guide authors to create accessible content and check for accessibility problems.", "A content generating product must be able to preserve the platform-level accessibility settings without impacting the output of the product.",
-            "An authoring/development tool must provide text search capabilities for design and code surfaces.", "There must be a logical flow to the focus in an interface. And the view follows the focus.",
-            "", "All focus changes must result from user action and the user should expect the change.","A user must be able to move focus out of a control by using a method consistent with the method used to move focus into the control.",
-            "Product doesn't cause risk of seizures. The UI doesn't flash at a rate greater than three times per second."};
-
         //Run through the Json returned by luis and fill in appropriate fields.
         public AnalyzeQuestion(LUIS response)
         {
@@ -42,7 +34,7 @@ namespace AccessibilityQABot
                     string[] typeOfQuestion = item.type.Split(new string[] { "::" }, StringSplitOptions.None);
                     QIdentifier = typeOfQuestion[1];
                 }
-                if(item.type == "builtin.number")
+                if(item.type == "masNumber")
                 {
                     MASNumber = item.entity;
                 }
@@ -59,110 +51,213 @@ namespace AccessibilityQABot
                     Verb = item.entity;
                 }
             }
-        } 
+        }
 
+        public string GeneralQuestionAccessibility()
+        { 
+            //General Accessibility Question - "Importance" intent
+            if(!String.IsNullOrEmpty(Adjective))
+            {
+                if (QIdentifier.ToLower().Contains("is") || QIdentifier.ToLower().Contains("why") || QIdentifier.ToLower().Contains("how"))
+                {
+                    if (Adjective.Contains("important") || Adjective.Contains("require"))
+                    {
+                        return "Accessibility is important because it allows for programs and applications to be available to all people regardless of their disability";
+                    }
+                }
+                else if (Adjective.Contains("importan") || Adjective.Contains("require"))
+                {
+                    return "Accessibility is important because it allows for programs and applications to be available to all " 
+                        +"people regardless of their disability";
+                }
+            }
+            //Verb such as "start" occurs in the question string
+            else if(!String.IsNullOrEmpty(Verb))
+            {
+                if (!String.IsNullOrEmpty(QIdentifier))
+                {
+                    if (QIdentifier.ToLower().Contains("why"))
+                    {
+                        if (!String.IsNullOrEmpty(Verb) && Verb.ToLower().Contains("start"))
+                        {
+                            return "You should start using accessibility to ensure that you application or program is available to all kinds of people\n\n" +
+                                "regardless of a dissability\n\nYou can get started by visiting:\n\nhttps://developer.microsoft.com/en-us/windows/accessible-apps";
+                        }
+                    }
+                    else if (QIdentifier.ToLower().Contains("how"))
+                    {
+                        if (!String.IsNullOrEmpty(Verb) && Verb.ToLower().Contains("start"))
+                        {
+                            return "You can get started by visiting:\n\nhttps://microsoft.sharepoint.com/teams/msenable/Pages/AccessibilityStandard.aspx ";
+                        }
+                        return "There are 3 crucial steps to ensure to follow to ensure that your application\n\n" +
+                            "is accessible to anyone despite any type of disability\n\n1. Plan for accessibility up front\n\n2. Integrate accessibility throughout the development lifecyle" +
+                            "\n\n3. Incorporate both automated and manual accessibility assurance\n\nTo learn more please visit:" +
+                            "\n\nhttps://developer.microsoft.com/en-us/windows/accessible-apps";
+                    }
+                    else if (QIdentifier.ToLower().Contains("where"))
+                    {
+                        if (!String.IsNullOrEmpty(Verb) && Verb.ToLower().Contains("start"))
+                        {
+                            return "You can get started by visiting:\n\nhttps://microsoft.sharepoint.com/teams/msenable/Pages/AccessibilityStandard.aspx ";
+                        }
+                    }
+                }
+            }
+            //If someone asks a question along the lines of define accessibility or explain accessibility
+            else if (!String.IsNullOrEmpty(Subject))
+            {
+                return "Accessibility focuses on people with auditory, cognitive, neurological, physical, speech, and visual impairment disabilities. "+
+                    "To learn more please visit:\n\nhttps://microsoft.sharepoint.com/teams/msenable/Pages/AccessibilityStandard.aspx";
+            }
+            return "Sorry but can you rephrase your question.\n\n";
+        }
+
+        #region Mas Specific Questions
         public Activity MASSpecifics(IDialogContext context)
         {
+            CsvReader reader = new CsvReader();
+            reader.FindMASfromCsv();
+
+            string tool = "";
+
             Activity replyToConversation = (Activity)context.MakeMessage();
             replyToConversation.Recipient = replyToConversation.Recipient;
             replyToConversation.Type = "message";
-     
+
+            replyToConversation.CreateReply("Tool: " + tool);
+
             //If our user asks for a specific number in regards to the MAS specifications
             if (!String.IsNullOrEmpty(MASNumber))
             {
-                int arrayPosition = Int32.Parse(MASNumber.TrimStart('0')) - 1;
-                if(arrayPosition == 5)
+                HeroCard MASSpecificCard = constructCardHelper(reader, MASNumber, out tool);
+                if(!String.IsNullOrEmpty(tool))
                 {
-                    replyToConversation.Text = "Sorry but I not have mas: " + MASNumber.TrimStart('0') + " implemented yet";
+                    Attachment masCard = MASSpecificCard.ToAttachment();
+                    replyToConversation.Attachments.Add(masCard);
                     return replyToConversation;
                 }
-                HeroCard MASSpecificCard = new HeroCard()
+                else
                 {
-                    Title = "MAS " + MASNumber + ": " + masSpecificNameArray[arrayPosition],
-                    Text = masSpecificRequirementArray[arrayPosition]
-                };
-                Attachment masCard = MASSpecificCard.ToAttachment();
-                replyToConversation.Attachments.Add(masCard);
-                return replyToConversation; 
+                    replyToConversation.Text = "Sorry but I can't find any mas standard for MAS: " + MASNumber;
+                    return replyToConversation;
+                }
             }
             else
             {
-                replyToConversation.Text = "Microsoft accessibility standards is a list of several features that "+
+                replyToConversation.Text = "Microsoft accessibility standards is a list of several features that " +
                     "100 different MAS standards ranging from software to hardware\n\nTo see a comprehensive list " +
                     "please visit:\n\n https://www.microsoft.com/en-us/accessibility";
                 return replyToConversation;
             }
         }
 
-        public string GeneralQuestionAccessibility()
-        { 
-            if(String.IsNullOrEmpty(QIdentifier) && !String.IsNullOrEmpty(Subject))
+        private HeroCard constructCardHelper(CsvReader csv, string num, out string tool)
+        {
+            int indexOfMasNum = getIndexOfMasNumber(csv, num);
+            if(indexOfMasNum == -1)
             {
-                return "Accessibility focuses on people with enabling indivduals with auditory, cognitive, neurological, physical, speech, and visual impairment disabilities to interact with technology\n\n";
+                tool = "";
+                return null;
             }
-            //General Questions about importance
-            if(!String.IsNullOrEmpty(Adjective) && (Adjective.ToLower().Contains("important") || Adjective.Contains("signifi")) && (QIdentifier.ToLower() == "why" || QIdentifier.ToLower() == "is" || QIdentifier.ToLower() == "how" || QIdentifier == "what"))
-            {
-                return "Accessibility is important because it allows for programs and applications to be available to all people regardless of their disability";
-            }
+            CardImage test = new CardImage(determineImageUrl(csv, indexOfMasNum, out tool));
 
-            if (QIdentifier.ToLower().Contains("is") || QIdentifier.ToLower().Contains("why"))
+            return new HeroCard()
             {
-                if(QIdentifier.ToLower().Contains("why"))
+                Title = "MAS " + csv.MASNumber[indexOfMasNum],
+                Subtitle = csv.Title[indexOfMasNum],
+                Text = csv.Description[indexOfMasNum],
+                Images = new List<CardImage>()
                 {
-                    if(!String.IsNullOrEmpty(Subject) && !String.IsNullOrEmpty(Adjective))
-                    {
-                        if (Adjective.Contains("important") || Adjective.Contains("require"))
-                        {
-                            return "Accessibility is important because it allows for programs and applications to be available to all people regardless of their disability";
-                        }
-                    }
-                    else if(!String.IsNullOrEmpty(Subject))
-                    {
-                        return "You should use accessibility to ensure that your application is avaiable to everyone regardless of their disability";
-                    }
+                    test
                 }
-                else
-                {
-                    if (Adjective.Contains("important") || Adjective.Contains("require"))
-                    {
-                        return "Yes it is important to follow Microsoft's accessibility rules in efforts to make your project available to all people\n\n" +
-                            "Please review the web page for more information:\n\nhttps://www.microsoft.com/en-us/accessibility";
-                    }
-                }
-            }
-            else if(QIdentifier.ToLower().Contains("what") || String.IsNullOrEmpty(QIdentifier))
-            {
-                return "Accessibility focuses on people with enabling indivduals with auditory, cognitive, neurological, physical, speech, and visual impairment disabilities to interact with technology\n\n";
-            }
-            else if (QIdentifier.ToLower().Contains("where"))
-            {
-                if(!String.IsNullOrEmpty(Verb) && Verb.ToLower().Contains("start"))
-                {
-                    return "You can get started by visiting:\n\nhttps://developer.microsoft.com/en-us/windows/accessible-apps";
-                }
-                return "Accessibility should be taken into consideration in any product you expect to be client-facing. If you believe your product may be used by the general public or even people"
-                    + "outside of your team you should take accessibility into consideration when designing your application";
-            }
-            //helloasdfsa
-            else if (QIdentifier.ToLower().Contains("how"))
-            {
-                if (!String.IsNullOrEmpty(Verb) && Verb.ToLower().Contains("start"))
-                {
-                    return "You can get started by visiting:\n\nhttps://developer.microsoft.com/en-us/windows/accessible-apps";
-                }
-                return "There are 3 crucial steps to ensure to follow to ensure that your application\n\n"+
-                    "is accessible to anyone despite any type of disability\n\n1. Plan for accessibility up front\n\n2. Integrate accessibility throughout the development lifecyle"+
-                    "\n\n3. Incorporate both automated and manual accessibility assurance\n\nTo learn more please visit:"+
-                    "\n\nhttps://developer.microsoft.com/en-us/windows/accessible-apps";
-            }
-            else if (QIdentifier.ToLower().Contains("when"))
-            {
-                return "Accessibility should be used anytime you are looking to design a program or application which will potentially be used by a client.";
-            }
-
-            return "Sorry but can you rephrase your question.\n\n";
+            };
         }
+
+        private int getIndexOfMasNumber(CsvReader csv, string mas)
+        {
+            StringBuilder sb = new StringBuilder();
+            char[] digits = mas.Where(Char.IsDigit).ToArray();
+            char[] letters = mas.Where(Char.IsLetter).ToArray();
+            string letter = "";
+            if (letters.Length == 1)
+            {
+                letter = letters[0].ToString().ToUpper();
+            }
+            else if (letters.Length < 0 || letters.Length > 1)
+            {
+                return -1;
+            }
+
+            if (!String.IsNullOrEmpty(letter))
+            {
+                foreach (var d in digits)
+                {
+                    sb.Append(d.ToString());
+                }
+                sb.Append(" " + letter);
+            }
+            else
+            {
+                sb.Append(mas);
+            }
+
+            for (int i = 0; i < csv.MASNumber.Count; i++)
+            {
+                if (csv.MASNumber[i].ToUpper() == sb.ToString())
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+        private string determineImageUrl(CsvReader item, int num, out string tool)
+        {
+            //Magnifier
+            //new CardImage("http://img.informer.com/icons/png/128/3823/3823636.png")
+            //Color contrast Analyzer (CCA
+            //new CardImage("https://is5-ssl.mzstatic.com/image/thumb/Purple18/v4/89/25/09/89250991-bb7a-12d5-f16c-fb33cd340459/source/256x256bb.jpg")
+            //Web Accessibility Toolbar (WAT)"
+            //new CardImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_rK56TNh2Tk3p9VXZLy8oORcG3dTnpWUgxO4cR4ULqoB4xSYiYg")
+            //Jaws
+            //new CardImage("http://www.aph.org/wp-content/uploads/2016/04/JAWS-for-Windows-logo.png")
+            //Keros
+            //new CardImage("https://www.materialui.co/materialIcons/action/extension_black_192x192.png")
+
+
+            if (item.Tools[num].ToLower().Contains("magnifer"))
+            {
+                tool = "Magnifier";
+                return "http://img.informer.com/icons/png/128/3823/3823636.png";
+            }
+            else if (item.Tools[num].ToLower().Contains("color contrast"))
+            {
+                tool = "Color Contrast Analyzer";
+                return "https://is5-ssl.mzstatic.com/image/thumb/Purple18/v4/89/25/09/89250991-bb7a-12d5-f16c-fb33cd340459/source/256x256bb.jpg";
+            }
+            else if (item.Tools[num].ToLower().Contains("toolbar"))
+            {
+                tool = "Web Access Toolbar";
+                return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_rK56TNh2Tk3p9VXZLy8oORcG3dTnpWUgxO4cR4ULqoB4xSYiYg";
+            }
+            else if (item.Tools[num].ToLower().Contains("jaw"))
+            {
+                tool = "JAWS";
+                return "http://www.aph.org/wp-content/uploads/2016/04/JAWS-for-Windows-logo.png";
+            }
+            else if (item.Tools[num].ToLower().Contains("kero"))
+            {
+                tool = "Keros";
+                return "https://www.materialui.co/materialIcons/action/extension_black_192x192.png";
+            }
+            else
+            {
+                tool = "Manual-Keyboard";
+                return "";
+            }
+
+        }
+        #endregion
 
         public Activity CodeSnippet(IDialogContext context)
         {
@@ -172,8 +267,7 @@ namespace AccessibilityQABot
             string res = "";
             if (!String.IsNullOrEmpty(MASNumber))
             {
-                int masNum = Int32.Parse(MASNumber.TrimStart('0'));
-                if (masNum == 6 || !String.IsNullOrEmpty(Noun) && Noun.ToLower().Contains("focus"))
+                if (MASNumber == "6" || !String.IsNullOrEmpty(Noun) && Noun.ToLower().Contains("focus"))
                 {
                     replyToConversation.Text = "```<input id=\"target\" type=\"button\" value=\"Field1\">\n"
                     + "\n< div id =\"divData\"  style =\"display: none\"/>\n"
@@ -184,7 +278,7 @@ namespace AccessibilityQABot
                     + "\n\t\t$( \"#divData\" ).show(); alert( \"Handler for .click() called.\" );\n"
                     + "\n});\n```\n";
                 }
-                else if (masNum == 7 || !String.IsNullOrEmpty(Noun) && Noun.ToLower().Contains("keyboard"))
+                else if (MASNumber == "7" || !String.IsNullOrEmpty(Noun) && Noun.ToLower().Contains("keyboard"))
                 {
                     replyToConversation.Text = "```$(‘#xxx').keypress(function(e){\n" +
                         "if (e.which == 27)\n" +
@@ -195,7 +289,7 @@ namespace AccessibilityQABot
                         "$\t(“#yourcontrolid”).focus();\n" +
                         "}\n});\n```\n";
                 }
-                else if(masNum == 26 || !String.IsNullOrEmpty(Noun) && Noun.ToLower().Contains("multiple"))
+                else if(MASNumber == "26" || !String.IsNullOrEmpty(Noun) && Noun.ToLower().Contains("multiple"))
                 {
                     replyToConversation.Text = "```\n$(‘#xxx').keypress(function(e){\n"
                     + "\tif (e.which == 13)\n"
@@ -204,7 +298,7 @@ namespace AccessibilityQABot
                     + "\t}\n"
                     + "});\n```\n";
                 }
-                else if (masNum == 27 || !String.IsNullOrEmpty(Noun) && (Noun.ToLower().Contains("bypass") || (Noun.ToLower().Contains("blocks"))))
+                else if (MASNumber == "27" || !String.IsNullOrEmpty(Noun) && (Noun.ToLower().Contains("bypass") || (Noun.ToLower().Contains("blocks"))))
                 {
                     replyToConversation.Text = "```\n< div >\n" +
                         "\t< a href = \"#MainContent\" id = \"SkipToContent\" >\n"
